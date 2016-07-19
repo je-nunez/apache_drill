@@ -8,7 +8,7 @@ Apache Drill is a very flexible and powerful SQL-like tool that allows to query 
 
 # How to Install
 
-Download Apache Drill tar-ball from [https://drill.apache.org/download/](https://drill.apache.org/download/) and then untar it in some location, like:
+Download the Apache Drill tar-ball from [https://drill.apache.org/download/](https://drill.apache.org/download/) and then untar it in some location, like:
 
         tar xf apache-drill-1.7.0.tar.gz
 
