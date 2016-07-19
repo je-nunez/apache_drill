@@ -8,7 +8,7 @@ Apache Drill is a very flexible and powerful SQL-like tool that allows to query 
 
 # How to Install
 
-Download from Apache Drill from [https://drill.apache.org/download/](https://drill.apache.org/download/) and the untar the tar-ball in some location, like:
+Download Apache Drill tar-ball from [https://drill.apache.org/download/](https://drill.apache.org/download/) and then untar it in some location, like:
 
         tar xf apache-drill-1.7.0.tar.gz
 
@@ -30,9 +30,7 @@ It will load:
 
 You may want to check the `./log/sqlline.log` log file if any issue occurs. This log file is located by default under the base directory where the tar-ball was extracted.
 
-The list of Drill Shell commands (not the SQL-alike commands) are at [https://drill.apache.org/docs/configuring-the-drill-shell/](https://drill.apache.org/docs/configuring-the-drill-shell/)
-
-For example, if after some window of inactivity you lose connectivity to Drillbit, receiving a message like:
+The list of Drill Shell commands (not the SQL-alike commands) is available at [https://drill.apache.org/docs/configuring-the-drill-shell/](https://drill.apache.org/docs/configuring-the-drill-shell/). For example, if after some window of inactivity you lose connectivity to Drillbit, receiving a message like:
 
         Error: SYSTEM ERROR: IllegalArgumentException: Attempted to send a message when connection is no longer valid.
 
@@ -65,7 +63,7 @@ E.g., to view the system's options (settings), use its SQL-alike commands:
 
 # Apache Drill's HTTP interface
 
-Instead of using the command-line oriented Drill Shell, you may use its HTTP interface, which is very easy and intuitive. It listens by default at port tcp/8047, and gives direct access to different functionality. For example, to submit SQl-like queries, go to (supposing it is running locally):
+Instead of using the command-line oriented Drill Shell, you may use its HTTP interface, which is very easy and intuitive. It listens by default at port tcp/8047. For example, to submit SQL-like queries, go to (supposing it is running locally):
 
         http://localhost:8047/query
 
@@ -87,7 +85,7 @@ The Drill's performance metrics are available at:
 
 # Apache Drill's Storage plugins
 
-Drill is a SQL-like interface to consult data in different backends. These backends are accessed by different **storage plugins**. These storage plugins may be enabled, disabled, or updated in the Web interface at:
+Drill is a SQL-like interface for consulting data in different backends. These backends are accessed by different **storage plugins**. These storage plugins may be enabled, disabled, or updated in the Web interface at:
 
         http://localhost:8047/storage
 
