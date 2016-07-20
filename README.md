@@ -42,15 +42,17 @@ you can reconnect your shell session to Drillbit using:
 
 # Some SQL-alike commands:
 
+For example, a very simple query on a JSON file could be:
+
         0: jdbc:drill:zk=local> SELECT * FROM dfs.`<local-filesystem-path-to>/a_json_file.json` LIMIT 5 ;
 
 At [https://drill.apache.org/docs/json-data-model/](https://drill.apache.org/docs/json-data-model/) there are more examples and guides on how to query JSON data. For example, and citing from this document (*[quotes]* in brackets are summaries for here, you should consult this document):
 
-- *By default, Drill does not support JSON lists [whose elements are] of different types. [Workarounds are presented.]*
+- *By default, Drill does not support JSON lists [whose elements are] of different types. [How to alter this default and other workarounds are shown. In short, Drill is, _by default_, stronger typed than JSON, which of course isn't typed at all.]*
 
 - *The Union type allows storing different types in the same field.*
 
-- *Drill returns null when a document does not have the specified map or level.*
+- *Drill returns null when a document does not have the specified map or level.* [For example, the case where some JSON paths have some maps or levels but other JSON paths in the same document don't have them.]
 
 - How to use the FLATTEN and KVGEN functions.
 
