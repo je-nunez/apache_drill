@@ -4,7 +4,7 @@ This is the very first draft, which is a *work in progress*. The implementation 
 
 # Intro
 
-Apache Drill is a very flexible and powerful SQL-like tool that allows to query many different data-sources, not only RDBMSs but also JSON files, `MongoDB`, `HBase`, `Hive`, etc.
+Apache Drill is a very flexible and powerful SQL-like tool that allows to query many different data-sources, not only RDBMSs but also JSON and CSV files, `MongoDB`, `HBase`, `Hive`, etc. Hence, it is not only useful for ad-hoc queries, but also for ETL jobs.
 
 # How to Install
 
@@ -44,7 +44,43 @@ you can reconnect your shell session to Drillbit using:
 
         0: jdbc:drill:zk=local> SELECT * FROM dfs.`<local-filesystem-path-to>/a_json_file.json` LIMIT 5 ;
 
-( ... TODO: more SQL-like commands to put here ... )
+At [https://drill.apache.org/docs/json-data-model/](https://drill.apache.org/docs/json-data-model/) there are more examples and guides on how to query JSON data. For example, and citing from this document (*[quotes]* in brackets are summaries for here, you should consult this document):
+
+- *By default, Drill does not support JSON lists [whose elements are] of different types. [Workarounds are presented.]*
+
+- *The Union type allows storing different types in the same field.*
+
+- *Drill returns null when a document does not have the specified map or level.*
+
+- How to use the FLATTEN and KVGEN functions.
+
+- Other very instructive examples.
+
+Here it is shown an example querying JSON data, using also the [Drill-GIS plugin](https://github.com/k255/drill-gis), in the script `query_LosAngelesMetro_NextBus_vehicle_positions.sh`. It has two queries which give results like (the data from http://restbus.info/ is real-time, so there results probably vary in another run):
+
+         +---------------------------------------------------------+----------+--------------+----------+------+-------------+--------------+------------------+
+         |                        vehicles                         | routeId  | directionId  | heading  | kph  |     lat     |     lon      | secsSinceReport  |
+         +---------------------------------------------------------+----------+--------------+----------+------+-------------+--------------+------------------+
+         | http://restbus.info/api/agencies/lametro/vehicles/6059  | 20       | 20_482_0     | 75       | 27   | 34.061691   | -118.307037  | 246              |
+         | http://restbus.info/api/agencies/lametro/vehicles/8557  | 16       | 16_281_1     | 270      | 31   | 34.073627   | -118.382523  | 246              |
+         | http://restbus.info/api/agencies/lametro/vehicles/3919  | 460      | 460_173_0    | 165      | 48   | 33.900269   | -118.046715  | 246              |
+         | http://restbus.info/api/agencies/lametro/vehicles/4003  | 52       | 52_234_0     | 220      | 0    | 33.869247   | -118.287338  | 246              |
+         | http://restbus.info/api/agencies/lametro/vehicles/5841  | 20       | 20_479_0     | 220      | 0    | 34.058586   | -118.44532   | 246              |
+         ...
+         +----------+--------------+--------------------------+---------------------+
+         | routeId  | directionId  | numBusesInThisDirection  |     avgSpeedKpH     |
+         +----------+--------------+--------------------------+---------------------+
+         | 40       | 40_859_1     | 1                        | 53.0                |
+         | 40       | 40_833_0     | 1                        | 50.0                |
+         | 33       | 33_357_0     | 1                        | 48.0                |
+         | 204      | 204_106_1    | 1                        | 47.0                |
+         | 705      | 705_66_0     | 1                        | 47.0                |
+         | 45       | 45_474_1     | 1                        | 47.0                |
+         | 33       | 33_352_0     | 1                        | 43.0                |
+         ...
+
+
+( ... TODO: more SQL-like commands to put here, and examples of storage plugin configurations ... )
 
 E.g., to view the system's options (settings), use its SQL-alike commands:
 
@@ -63,29 +99,29 @@ E.g., to view the system's options (settings), use its SQL-alike commands:
 
 # Apache Drill's HTTP interface
 
-Instead of using the command-line oriented Drill Shell, you may use its HTTP interface, which is very easy and intuitive. It listens by default at port tcp/8047. For example, to submit SQL-like queries, go to (supposing it is running locally):
+Instead of using the command-line oriented Drill Shell, you may use its HTTP interface, which is very easy and intuitive. The Drill Web Console listens by default at port tcp/8047. For example, to submit SQL-like queries, go to (supposing it is running locally):
 
         http://localhost:8047/query
 
-The logs of the previous queries, their execution plans and delays, is available at:
+The logs of the previous queries, their execution plans and delays, are available at:
 
         http://localhost:8047/profiles
 
-In the Drill Web console it is possible to change Drill's system options at:
+In the Drill Web Console it is possible to change Drill's system options at:
 
         http://localhost:8047/options
 
-instead of using `ALTER SYSTEM` or `SET` commands in the command-line Shell client.
+instead of using `ALTER SYSTEM`, `ALTER SESSION SET`, or `SET` commands in the command-line Shell client.
 
 The Drill's performance metrics are available at:
 
         http://localhost:8047/metrics
 
-(Note: There are other TCP ports used by Drill, see [http://drill.apache.org/docs/ports-used-by-drill/](http://drill.apache.org/docs/ports-used-by-drill/).)
+(Note: There are other TCP ports used by Drill, see [http://drill.apache.org/docs/ports-used-by-drill/](http://drill.apache.org/docs/ports-used-by-drill/) and [https://drill.apache.org/docs/architecture-introduction/#drill-clients](https://drill.apache.org/docs/architecture-introduction/#drill-clients).)
 
 # Apache Drill's Storage plugins
 
-Drill is a SQL-like interface for consulting data in different backends. These backends are accessed by different **storage plugins**. These storage plugins may be enabled, disabled, or updated in the Web interface at:
+Drill is a SQL-like interface for consulting data in different backends. These backends are accessed by different **storage plugins**. These storage plugins can be enabled, disabled, or updated in the Drill Web Console at:
 
         http://localhost:8047/storage
 
