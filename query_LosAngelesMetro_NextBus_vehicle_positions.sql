@@ -10,6 +10,33 @@ SELECT vehicles._links.self.href as vehicles, vehicles.routeId,
      ORDER BY vehicles.secsSinceReport DESC
      LIMIT 10;
 
+-- Save the above query (without the LIMIT 10) to a JSON file in the "dfs.tmp"
+-- schema. As mentioned in
+--       https://drill.apache.org/docs/show-databases-and-show-schemas/:
+--
+--   "In Drill, a database or schema is a storage plugin configuration that can
+--    include a workspace. For example, in dfs.donuts, dfs is the configured
+--    file system and donuts the workspace. The workspace points to a directory
+--    within the file system."
+--
+-- so the "dfs.tmp" refers to the system's tmp directory, so the new JSON table
+-- will be created by Drill with the new-table-name under the tmp directory.
+
+ALTER SESSION SET `store.format`='json';
+USE dfs.tmp;
+
+DROP TABLE vehicles_with_more_than_60secs_report;
+
+CREATE TABLE vehicles_with_more_than_60secs_report AS
+    SELECT vehicles._links.self.href as vehicles, vehicles.routeId,
+           vehicles.directionId, vehicles.heading, vehicles.kph, vehicles.lat,
+           vehicles.lon, vehicles.secsSinceReport
+         FROM dfs.`/tmp/lametro_vehicles.json`  vehicles
+         WHERE vehicles.secsSinceReport > 60
+         ORDER BY vehicles.secsSinceReport DESC;
+
+-- (For more details: https://drill.apache.org/docs/create-table-as-ctas/ )
+
 -- The query below uses the Drill-GIS plugin, which implements PostGIS functions
 -- for Apache Drill, to find those vehicles which are within a given polygon,
 -- while GROUPing by those vehicles in the same route and route-direction.

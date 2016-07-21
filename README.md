@@ -4,13 +4,15 @@ This is the very first draft, which is a *work in progress*. The implementation 
 
 # Intro
 
-Apache Drill is a very flexible and powerful SQL-like tool that allows to query many different data-sources, not only RDBMSs but also JSON and CSV files, `MongoDB`, `HBase`, `Hive`, etc. Hence, it is not only useful for ad-hoc queries, but also for ETL jobs.
+Apache Drill is a very flexible and powerful SQL-like tool that allows to query many different data-sources, not only RDBMSs but also JSON and CSV files, `MongoDB`, `HBase`, `Hive`, etc. (Consult here [https://drill.apache.org/docs/query-data-introduction/](https://drill.apache.org/docs/query-data-introduction/) for the current list of possible data-sources.) Hence, it is not only useful for ad-hoc queries, but also for ETL jobs.
 
 # How to Install
 
 Download the Apache Drill tar-ball from [https://drill.apache.org/download/](https://drill.apache.org/download/) and then untar it in some location, like:
 
         tar xf apache-drill-1.7.0.tar.gz
+
+At [https://github.com/apache/drill/blob/master/INSTALL.md](https://github.com/apache/drill/blob/master/INSTALL.md) there are more details on how to build, customize, and install it.
 
 # How to Run the Drill Shell in Embedded Mode
 
@@ -30,7 +32,7 @@ It will load:
 
 You may want to check the `./log/sqlline.log` log file if any issue occurs. This log file is located by default under the base directory where the tar-ball was extracted.
 
-The list of Drill Shell commands (not the SQL-alike commands) is available at [https://drill.apache.org/docs/configuring-the-drill-shell/](https://drill.apache.org/docs/configuring-the-drill-shell/). For example, if after some window of inactivity you lose connectivity to Drillbit, receiving a message like:
+The list of commands directly for the Drill Shell (ie., not the SQL-alike commands) is available at [https://drill.apache.org/docs/configuring-the-drill-shell/](https://drill.apache.org/docs/configuring-the-drill-shell/). For example, if after some window of inactivity the Drill Shell loses connectivity to Drillbit, showing a message like:
 
         Error: SYSTEM ERROR: IllegalArgumentException: Attempted to send a message when connection is no longer valid.
 
@@ -48,7 +50,7 @@ For example, a very simple query on a JSON file could be:
 
 At [https://drill.apache.org/docs/json-data-model/](https://drill.apache.org/docs/json-data-model/) there are more examples and guides on how to query JSON data. For example, and citing from this document (*[quotes]* in brackets are summaries for here, you should consult this document):
 
-- *By default, Drill does not support JSON lists [whose elements are] of different types. [How to alter this default and other workarounds are shown. In short, Drill is, _by default_, stronger typed than JSON, which of course isn't typed at all.]*
+- *By default, Drill does not support JSON lists [whose elements are] of different types.* [How to alter this default and other workarounds are shown. In short, Drill is, _by default_, stronger typed than JSON, which of course isn't typed at all.]
 
 - *The Union type allows storing different types in the same field.*
 
@@ -58,7 +60,7 @@ At [https://drill.apache.org/docs/json-data-model/](https://drill.apache.org/doc
 
 - Other very instructive examples.
 
-Here it is shown an example querying JSON data, using also the [Drill-GIS plugin](https://github.com/k255/drill-gis), in the script `query_LosAngelesMetro_NextBus_vehicle_positions.sh`. It has two queries which give results like (the data from http://restbus.info/ is real-time, so there results probably vary in another run):
+Here it is shown an example querying JSON data, using also the [Drill-GIS plugin](https://github.com/k255/drill-gis), in the script `query_LosAngelesMetro_NextBus_vehicle_positions.sh`. It has two queries which give results like (the data from http://restbus.info/ is real-time, so there results probably vary in another run), plus an ETL job on the data which creates a transformed and filtered JSON file from the original:
 
          +---------------------------------------------------------+----------+--------------+----------+------+-------------+--------------+------------------+
          |                        vehicles                         | routeId  | directionId  | heading  | kph  |     lat     |     lon      | secsSinceReport  |
@@ -84,6 +86,8 @@ Here it is shown an example querying JSON data, using also the [Drill-GIS plugin
 
 ( ... TODO: more SQL-like commands to put here, and examples of storage plugin configurations ... )
 
+The formal list of ANSI SQL commands supported by Drill is at [https://drill.apache.org/docs/sql-reference-introduction/](https://drill.apache.org/docs/sql-reference-introduction/).
+
 E.g., to view the system's options (settings), use its SQL-alike commands:
 
         0: jdbc:drill:zk=local> DESCRIBE sys.options;
@@ -105,7 +109,7 @@ Instead of using the command-line oriented Drill Shell, you may use its HTTP int
 
         http://localhost:8047/query
 
-The logs of the previous queries, their execution plans and delays, are available at:
+The logs of the previous queries, their execution plans and delays, as well as the list of queries currently in execution (with the option to cancel them) are available at:
 
         http://localhost:8047/profiles
 
@@ -113,7 +117,7 @@ In the Drill Web Console it is possible to change Drill's system options at:
 
         http://localhost:8047/options
 
-instead of using `ALTER SYSTEM`, `ALTER SESSION SET`, or `SET` commands in the command-line Shell client.
+instead of using `ALTER SYSTEM SET`, `ALTER SESSION SET`, or `SET` commands in the command-line Shell client.
 
 The Drill's performance metrics are available at:
 
