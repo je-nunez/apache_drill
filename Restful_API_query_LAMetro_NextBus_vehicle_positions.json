@@ -1,0 +1,10 @@
+{
+   "queryType":"SQL",
+    "query": "SELECT vehicles._links.self.href as vehicles, vehicles.routeId,
+                     vehicles.directionId, vehicles.heading, vehicles.kph, vehicles.lat,
+                     vehicles.lon, vehicles.secsSinceReport
+                   FROM dfs.`/tmp/lametro_vehicles.json`  vehicles
+                   WHERE vehicles.secsSinceReport > 60
+                   ORDER BY vehicles.secsSinceReport DESC
+                   LIMIT 10"
+}
