@@ -141,80 +141,77 @@ To check the run-time of Drill, the `/options.json` entry is also very useful (d
 
       curl http://localhost:8047/options.json
 
-      ...
-      {
-        "name" : "store.json.read_numbers_as_double",
-        "value" : false,
-        "type" : "SYSTEM",
-        "kind" : "BOOLEAN"
-      }, {
-        "name" : "exec.java_compiler_debug",
-        "value" : true,
-        "type" : "SYSTEM",
-        "kind" : "BOOLEAN"
-      }, {
-        "name" : "drill.exec.functions.cast_empty_string_to_null",
-        "value" : false,
-        "type" : "SYSTEM",
-        "kind" : "BOOLEAN"
-      }
-      ...
+          ...
+          {
+            "name" : "store.json.read_numbers_as_double",
+            "value" : false,
+            "type" : "SYSTEM",
+            "kind" : "BOOLEAN"
+          }, {
+            "name" : "exec.java_compiler_debug",
+            "value" : true,
+            "type" : "SYSTEM",
+            "kind" : "BOOLEAN"
+          }, {
+            "name" : "drill.exec.functions.cast_empty_string_to_null",
+            "value" : false,
+            "type" : "SYSTEM",
+            "kind" : "BOOLEAN"
+          }
+          ...
 
-For supervising whether Apache Drill is up under network monitoring systems, Drill offers the `status.json` RESTful entry, where the network monitoring system needs to check the answer:
+For supervising whether Apache Drill is up under network monitoring systems, Drill offers the `status.json` RESTful entry, where the network monitoring system needs to check its answer:
 
-     curl http://localhost:8047/status.json
+      curl http://localhost:8047/status.json
 
-     {
-       "status" : "Running!"
-     }
+          {
+            "status" : "Running!"
+          }
 
 Drill also offers detailed performance metrics to these network monitoring systems and also to trending systems, through its `/status/metrics` RESTful entry. For example, just a short section of its metrics report (consult [https://drill.apache.org/docs/rest-api/#metrics](https://drill.apache.org/docs/rest-api/#metrics) for more details):
 
-     # acting as a network monitoring and/or trending system for performance metrics
+      # acting as a network monitoring and/or trending system for performance metrics
      
-     curl http://localhost:8047/status/metrics
+      curl http://localhost:8047/status/metrics
 
-       ...
-       "histograms": {
-           "drill.allocator.normal.hist": {
-               "count": 722,
-               "max": 65536,
-               "mean": 4367.608033240997,
-               "min": 1,
-               "p50": 512.0,
-               "p75": 4096.0,
-               "p95": 16384.0,
-               "p98": 32768.0,
-               "p99": 57999.359999999404,
-               "p999": 65536.0,
-               "stddev": 9249.677313565859
-           }
-           ...
-       },
-       ...
-       "timers": {
-           "org.apache.drill.exec.store.schedule.BlockMapBuilder.blockMapBuilderTimer": {
-               "count": 1,
-               "duration_units": "seconds",
-               "m15_rate": 2.0707471789958063e-08,
-               "m1_rate": 0.06844942451529727,
-               "m5_rate": 0.008017692801515435,
-               "max": 0.015364698000000001,
-               "mean": 0.015364698000000001,
-               "mean_rate": 0.0010286016395554193,
-               "min": 0.015364698000000001,
-               "p50": 0.015364698000000001,
-               "p75": 0.015364698000000001,
-               "p95": 0.015364698000000001,
-               "p98": 0.015364698000000001,
-               "p99": 0.015364698000000001,
-               "p999": 0.015364698000000001,
-               "rate_units": "calls/second",
-               "stddev": 0.0
-           }
-
-
-
+          ...
+          "histograms": {
+              "drill.allocator.normal.hist": {
+                  "count": 722,
+                  "max": 65536,
+                  "mean": 4367.608033240997,
+                  "min": 1,
+                  "p50": 512.0,
+                  "p75": 4096.0,
+                  "p95": 16384.0,
+                  "p98": 32768.0,
+                  "p99": 57999.359999999404,
+                  "p999": 65536.0,
+                  "stddev": 9249.677313565859
+              }
+              ...
+          },
+          ...
+          "timers": {
+              "org.apache.drill.exec.store.schedule.BlockMapBuilder.blockMapBuilderTimer": {
+                  "count": 1,
+                  "duration_units": "seconds",
+                  "m15_rate": 2.0707471789958063e-08,
+                  "m1_rate": 0.06844942451529727,
+                  "m5_rate": 0.008017692801515435,
+                  "max": 0.015364698000000001,
+                  "mean": 0.015364698000000001,
+                  "mean_rate": 0.0010286016395554193,
+                  "min": 0.015364698000000001,
+                  "p50": 0.015364698000000001,
+                  "p75": 0.015364698000000001,
+                  "p95": 0.015364698000000001,
+                  "p98": 0.015364698000000001,
+                  "p99": 0.015364698000000001,
+                  "p999": 0.015364698000000001,
+                  "rate_units": "calls/second",
+                  "stddev": 0.0
+              }
 
 
 # Apache Drill's Storage plugins
