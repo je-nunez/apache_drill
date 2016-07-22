@@ -131,7 +131,7 @@ Apache Drill also offers a RESTful API at the same tcp port, 8047 (default).
 
 For example, you can submit SQL queries to this interface, and the script `Restful_API_query_LAMetro_NextBus_vehicle_positions.sh` in this repository gives an example. (There are more details of this functionality at [https://drill.apache.org/docs/rest-api/#query](https://drill.apache.org/docs/rest-api/#query).)
 
-There is a very fast and easy-to-use Drill log parser at `http://<drill-listening-address>:8047/profiles.json`, which can give in JSON form the profiles of the running and completed queries, time of execution, etc., as well as the possibility to cancel running queries. For example:
+There is a very fast and easy-to-use Drill log parser at `http://<drill-listening-address>:8047/profiles.json`, which can give in JSON format the profiles of the running and completed queries, time of execution, etc., as well as the possibility to cancel running queries. For example:
 
       curl http://localhost:8047/profiles.json
 
