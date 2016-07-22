@@ -1,5 +1,5 @@
 {
-   "queryType":"SQL",
+    "queryType":"SQL",
     "query": "SELECT vehicles._links.self.href as vehicles, vehicles.routeId,
                      vehicles.directionId, vehicles.heading, vehicles.kph, vehicles.lat,
                      vehicles.lon, vehicles.secsSinceReport

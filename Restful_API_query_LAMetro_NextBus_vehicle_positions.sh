@@ -1,5 +1,11 @@
 #!/bin/sh
 
+# This script does not use Apache Drill in embedded mode (as the other script
+# "query_LosAngelesMetro_NextBus_vehicle_positions.sh" does): this script
+# does expect that Apache Drill is already running to query it through its
+# RESTful API. (Although this script could pre-check whether Drill is running
+# or not -ie., listening at the default port tcp/8047- before querying it,
+# and if it is not running, start it.)
 
 # our working copy of the original data source
 
