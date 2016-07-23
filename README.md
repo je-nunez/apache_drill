@@ -217,6 +217,7 @@ Drill also offers detailed performance metrics to these network monitoring syste
                   "stddev": 0.0
               }
 
+[https://drill.apache.org/docs/monitoring-metrics/](https://drill.apache.org/docs/monitoring-metrics/) has the list of pre-defined metrics. Besides, Apache Drill can write its performance metrics periodically to the log file if the system option `drill.metrics.log.enabled` is set to `true`, and then the option `drill.metrics.log.interval` is set to the period in seconds (default: 60 seconds) after which Drill must write its performance metrics to the log file (improvement ticket `[DRILL-4654]`, implemented). ([https://github.com/apache/drill/blob/master/common/src/main/java/org/apache/drill/exec/metrics/DrillMetrics.java](https://github.com/apache/drill/blob/master/common/src/main/java/org/apache/drill/exec/metrics/DrillMetrics.java) has details of the Drill internal performance metrics.)
 
 # Apache Drill's Storage plugins
 
