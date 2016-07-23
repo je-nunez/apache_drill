@@ -37,7 +37,7 @@ SELECT vehicles._links.self.href as vehicles, vehicles.routeId,
 --                     "writable" : true,
 --
 --  so the "dfs" storage plugin is enabled, and its workspace "dfs.tmp" refers
---  to the directory "/tmp", to which Drill is given writable permissions.
+--  to the directory "/tmp", to which Drill is given write permissions.
 
 
 ALTER SESSION SET `store.format`='json';
