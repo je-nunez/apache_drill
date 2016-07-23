@@ -21,6 +21,24 @@ SELECT vehicles._links.self.href as vehicles, vehicles.routeId,
 --
 -- so the "dfs.tmp" refers to the system's tmp directory, so the new JSON table
 -- will be created by Drill with the new-table-name under the tmp directory.
+-- (E.g., querying Apache Drill through its RESTful API on the "dfs" storage
+--  plugin:
+--
+--          curl http://localhost:8047/storage/dfs.json
+--
+--  can show, summarized for our case:
+--
+--             "name" : "dfs",
+--               "config" : {
+--                 "enabled" : true,
+--                 "workspaces" : {
+--                   "tmp" : {
+--                     "location" : "/tmp",
+--                     "writable" : true,
+--
+--  so the "dfs" storage plugin is enabled, and its workspace "dfs.tmp" refers
+--  to the directory "/tmp", to which Drill is given writable permissions.
+
 
 ALTER SESSION SET `store.format`='json';
 USE dfs.tmp;
