@@ -85,7 +85,7 @@ Here it is shown an example querying JSON data, using also the [Drill-GIS plugin
          | 33       | 33_352_0     | 1                        | 43.0                |
          ...
 
-To query CSV files using Drill's SQL instruction is similar, just that the columns are referenced by the names `COLUMNS[n]`, where `n` is the 0-based index of the column in the CSV, and the name of the SQL table (or view) in the FROM clause is the pathname of the CSV file. ([http://drill.apache.org/docs/querying-plain-text-files/](http://drill.apache.org/docs/querying-plain-text-files/) has the formal details.)
+To query CSV files using Drill's SQL is similar, just that the columns are referenced by the names `COLUMNS[n]`, where `n` is the 0-based index of the column in the CSV, and the name of the SQL table (or view) in the FROM clause is the pathname of the CSV file. ([http://drill.apache.org/docs/querying-plain-text-files/](http://drill.apache.org/docs/querying-plain-text-files/) has the formal details.)
 
 ( ... TODO: more SQL-like commands to put here, and examples of storage plugin configurations ... )
 
