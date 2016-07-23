@@ -4,7 +4,7 @@ This is the very first draft, which is a *work in progress*. The implementation 
 
 # Intro
 
-Apache Drill is a very flexible and powerful SQL-like tool that allows to query many different data-sources, not only RDBMSs but also JSON and CSV files, `MongoDB`, `HBase`, `Hive`, etc. (Consult here [https://drill.apache.org/docs/query-data-introduction/](https://drill.apache.org/docs/query-data-introduction/) for the current list of possible data-sources.) Hence, it is not only useful for ad-hoc queries, but also for ETL jobs.
+Apache Drill is a very flexible and powerful SQL-like query engine that allows to query many different data-sources, not only RDBMSs but also JSON and CSV files, `MongoDB`, `HBase`, `Hive`, etc. (Consult here [https://drill.apache.org/docs/query-data-introduction/](https://drill.apache.org/docs/query-data-introduction/) for the current list of possible data-sources.) Hence, it is not only useful for ad-hoc queries, but also for ETL jobs.
 
 # How to Install
 
@@ -30,7 +30,7 @@ It will load:
         "what ever the mind of man can conceive and believe, drill can query"
         0: jdbc:drill:zk=local>
 
-You may want to check the `./log/sqlline.log` log file if any issue occurs. This log file is located by default under the base directory where the tar-ball was extracted.
+The `./log/sqlline.log` log file contains the operational log of Apache Drill. The `./log/sqlline_queries.json` log file contains JSON lines with each SQL instruction that has been sent for execution to Drill, with its `queryId`, database `schema`, the SQL instruction itself in the `queryText`, the `start` and `finish` epoch times of the SQL instruction in milliseconds resolution, the `outcome` of the instruction, either completed or failed, the `username` who submitted it and the client `remoteAddress`. These log files are located by default under the base directory where the tar-ball was extracted.
 
 The list of commands directly for the Drill Shell (ie., not the SQL-alike commands) is available at [https://drill.apache.org/docs/configuring-the-drill-shell/](https://drill.apache.org/docs/configuring-the-drill-shell/). For example, if after some window of inactivity the Drill Shell loses connectivity to Drillbit, showing a message like:
 
@@ -42,9 +42,11 @@ you can reconnect your shell session to Drillbit using:
 
         0: jdbc:drill:zk=local> !reconnect jdbc:drill:drillbit=localhost
 
+To start Drill in distributed mode, consult [https://drill.apache.org/docs/starting-drill-in-distributed-mode/](https://drill.apache.org/docs/starting-drill-in-distributed-mode/). The internal implementation of a distributed Drill is explained at [http://drill.apache.org/docs/drill-query-execution/](http://drill.apache.org/docs/drill-query-execution/).
+
 # Some SQL-alike commands:
 
-For example, a very simple query on a JSON file could be:
+A very simple query on a JSON file could be:
 
         0: jdbc:drill:zk=local> SELECT * FROM dfs.`<local-filesystem-path-to>/a_json_file.json` LIMIT 5 ;
 
@@ -60,7 +62,7 @@ At [https://drill.apache.org/docs/json-data-model/](https://drill.apache.org/doc
 
 - Other very instructive examples.
 
-Here it is shown an example querying JSON data, using also the [Drill-GIS plugin](https://github.com/k255/drill-gis), in the script `query_LosAngelesMetro_NextBus_vehicle_positions.sh`. It has two queries which give results like (the data from http://restbus.info/ is real-time, so there results probably vary in another run), plus an ETL job on the data which creates a transformed and filtered JSON file from the original:
+Here it is shown an example querying JSON data, using also the [Drill-GIS plugin](https://github.com/k255/drill-gis), in the script [query_LosAngelesMetro_NextBus_vehicle_positions.sh](query_LosAngelesMetro_NextBus_vehicle_positions.sh). The associated, external SQL file [query_LosAngelesMetro_NextBus_vehicle_positions.sql](query_LosAngelesMetro_NextBus_vehicle_positions.sql) has two queries which give results like the ones below (the data from http://restbus.info/ is real-time, so there results probably vary in another run), plus an ETL job on the data which creates a transformed and filtered JSON file from the original:
 
          +---------------------------------------------------------+----------+--------------+----------+------+-------------+--------------+------------------+
          |                        vehicles                         | routeId  | directionId  | heading  | kph  |     lat     |     lon      | secsSinceReport  |
@@ -83,6 +85,7 @@ Here it is shown an example querying JSON data, using also the [Drill-GIS plugin
          | 33       | 33_352_0     | 1                        | 43.0                |
          ...
 
+To query CSV files using Drill's SQL instruction is similar, just that the columns are referenced by the names `COLUMNS[n]`, where `n` is the 0-based index of the column in the CSV, and the name of the SQL table (or view) in the FROM clause is the pathname of the CSV file. ([http://drill.apache.org/docs/querying-plain-text-files/](http://drill.apache.org/docs/querying-plain-text-files/) has the formal details.)
 
 ( ... TODO: more SQL-like commands to put here, and examples of storage plugin configurations ... )
 
@@ -105,7 +108,7 @@ E.g., to view the system's options (settings), use its SQL-alike commands:
 
 # Apache Drill's HTTP interface (Web Console)
 
-Instead of using the command-line oriented Drill Shell, you may use its HTTP interface, which is very easy and intuitive. The Drill Web Console listens by default at port tcp/8047. For example, to submit SQL-like queries, go to (supposing it is running locally):
+Instead of using the command-line oriented Drill Shell, an HTTP interface is also active, which is very easy and intuitive. The Drill Web Console listens by default at port tcp/8047. For example, to submit SQL-like queries, go to (supposing it is running locally):
 
         http://localhost:8047/query
 
@@ -129,7 +132,7 @@ The Drill's performance metrics are available at:
 
 Apache Drill also offers a RESTful API at the same tcp port, 8047 (default).
 
-For example, you can submit SQL queries to this interface, and the script `Restful_API_query_LAMetro_NextBus_vehicle_positions.sh` in this repository gives an example. (There are more details of this functionality at [https://drill.apache.org/docs/rest-api/#query](https://drill.apache.org/docs/rest-api/#query).)
+For example, you can submit SQL queries to this interface, and the script [Restful_API_query_LAMetro_NextBus_vehicle_positions.sh](Restful_API_query_LAMetro_NextBus_vehicle_positions.sh) in this repository gives an example, with an external JSON file containing the SQL instruction to submit at [Restful_API_query_LAMetro_NextBus_vehicle_positions.json](Restful_API_query_LAMetro_NextBus_vehicle_positions.json). (There are more details of this functionality at [https://drill.apache.org/docs/rest-api/#query](https://drill.apache.org/docs/rest-api/#query).)
 
 There is a very fast and easy-to-use Drill log parser at `http://<drill-listening-address>:8047/profiles.json`, which can give in JSON format the profiles of the running and completed queries, time of execution, etc., as well as the possibility to cancel running queries. For example:
 
@@ -170,7 +173,8 @@ For supervising whether Apache Drill is up under network monitoring systems, Dri
 
 Drill also offers detailed performance metrics to these network monitoring systems and also to trending systems, through its `/status/metrics` RESTful entry. For example, just a short section of its metrics report (consult [https://drill.apache.org/docs/rest-api/#metrics](https://drill.apache.org/docs/rest-api/#metrics) for more details):
 
-      # acting as a network monitoring and/or trending system for performance metrics
+      # the request by a network monitoring and/or trending system
+      # for performance metrics might be similar to:
      
       curl http://localhost:8047/status/metrics
 

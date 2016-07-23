@@ -45,7 +45,7 @@ echo "\nQuerying Apache Drill through its Restful API." \
 
 # mktemp is not 100% equivalent between Linux and Mac/OS, but for this example,
 # it will be enough.
-save_http_response_headers=`mktemp -t  drill_response.XXXXXXXXXX`
+save_http_response_headers=`mktemp -t  drill_response_headers.XXXXXXXXXX`
 
 curl -X POST -H "Content-Type: application/json"      \
      -d "@$input_sql_query_json"                      \
