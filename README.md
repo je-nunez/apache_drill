@@ -225,7 +225,7 @@ Drill is a SQL-like interface for consulting data in different backends. These b
 
         http://localhost:8047/storage
 
-with plugins for storage in `cp`, `dfs`, `hbase`, `hive`, `kudu`, `mongo`, and `s3`. You can list the configuration, create, enable, or disable different storage plugins through the RESTful API at its `/storage/...` API entry. (See [https://drill.apache.org/docs/rest-api/#storage](https://drill.apache.org/docs/rest-api/#storage) for more details.)
+with plugins for storage in `cp`, `dfs`, `hbase`, `hive`, `kudu`, `mongo`, and `s3`. Besides in the Drill Web Console, you can as well list the configuration, create, enable, or disable different storage plugins through the RESTful API at its `/storage/...` API entry. (See [https://drill.apache.org/docs/rest-api/#storage](https://drill.apache.org/docs/rest-api/#storage) for more details.)
 
 In the links below there are more information about the storage plugins:
 
